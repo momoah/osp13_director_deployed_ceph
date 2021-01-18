@@ -563,14 +563,14 @@ Network Isolation
 For each OpenStack node, I have six interfaces (on all VMs) configured for the following vlans:
 
 
-|NIC| Eth| VLAN ID| VLAN Description|
+|NIC|Eth|VLAN ID|VLAN Description|
 | --- | --- | --- | --- |
-|NIC1| eth0| 10| This is my control VLAN|
-|NIC2| eth1| 30 | Storage VLAN|
-|NIC3| eth2| 40| Sotrage Management VLAN|
-|NIC4| eth3| 20| Internal API VLAN|
-|NIC5| eth4| 50| Tenant VLAN| 
-|NIC6| eth5| 0| External VLAN (My public network)|
+|NIC1|eth0|10|This is my control VLAN|
+|NIC2|eth1|30|Storage VLAN|
+|NIC3|eth2|40|Sotrage Management VLAN|
+|NIC4|eth3|20|Internal API VLAN|
+|NIC5|eth4|50|Tenant VLAN| 
+|NIC6|eth5|0|External VLAN (My public network)|
   
 Based on instructions from: https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html/advanced_overcloud_customization/basic-network-isolation
 
