@@ -1,0 +1,92 @@
+# This file allows IPv6 deployment on tenant networks as well.
+# This should only be used for new deployments and not for upgrade
+# or update.
+resource_registry:
+  # Network Interface templates to use (these files must exist). You can
+  # override these by including one of the net-*.yaml environment files,
+  # such as net-bond-with-vlans-v6.yaml, or modifying the list here.
+  # Port assignments for the Controller
+  OS::TripleO::Controller::Net::SoftwareConfig:
+    ../network/config/single-nic-vlans/controller.yaml
+  # Port assignments for the Compute
+  OS::TripleO::Compute::Net::SoftwareConfig:
+    ../network/config/single-nic-vlans/compute.yaml
+  # Port assignments for the CephStorage
+  OS::TripleO::CephStorage::Net::SoftwareConfig:
+    ../network/config/single-nic-vlans/ceph-storage.yaml
+
+parameter_defaults:
+  # This section is where deployment-specific configuration is done
+  #
+  # NOTE: (Since Rocky)
+  # ControlPlaneSubnetCidr: It is no longer a requirement to provide this
+  #                         parameter. The attribute is resolved from the
+  #                         ctlplane subnet(s).
+  # ControlPlaneDefaultRoute: It is no longer a requirement to provide this
+  #                           parameter. The attribute is resolved from the
+  #                           ctlplane subnet(s).
+  # EC2MetadataIp: It is no longer a requirement to provide this parameter. The
+  #                attribute is resolved from the ctlplane subnet(s).
+  #
+  #
+
+  # Customize the IP subnets to match the local environment
+  StorageNetCidr: 'fd00:fd00:fd00:3000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  StorageAllocationPools: [{'start': 'fd00:fd00:fd00:3000::10', 'end': 'fd00:fd00:fd00:3000:ffff:ffff:ffff:fffe'}]
+  # Customize the VLAN ID to match the local environment
+  StorageNetworkVlanID: 30
+
+  # Customize the IP subnets to match the local environment
+  StorageMgmtNetCidr: 'fd00:fd00:fd00:4000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  StorageMgmtAllocationPools: [{'start': 'fd00:fd00:fd00:4000::10', 'end': 'fd00:fd00:fd00:4000:ffff:ffff:ffff:fffe'}]
+  # Customize the VLAN ID to match the local environment
+  StorageMgmtNetworkVlanID: 40
+
+  # Customize the IP subnets to match the local environment
+  InternalApiNetCidr: 'fd00:fd00:fd00:2000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  InternalApiAllocationPools: [{'start': 'fd00:fd00:fd00:2000::10', 'end': 'fd00:fd00:fd00:2000:ffff:ffff:ffff:fffe'}]
+  # Customize the VLAN ID to match the local environment
+  InternalApiNetworkVlanID: 20
+
+  # Customize the IP subnets to match the local environment
+  TenantNetCidr: 'fd00:fd00:fd00:5000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  TenantAllocationPools: [{'start': 'fd00:fd00:fd00:5000::10', 'end': 'fd00:fd00:fd00:5000:ffff:ffff:ffff:fffe'}]
+  # Customize the VLAN ID to match the local environment
+  TenantNetworkVlanID: 50
+
+  # Customize the IP subnets to match the local environment
+  ExternalNetCidr: '2001:db8:fd00:1000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  # Leave room if the external network is also used for floating IPs
+  ExternalAllocationPools: [{'start': '2001:db8:fd00:1000::10', 'end': '2001:db8:fd00:1000:ffff:ffff:ffff:fffe'}]
+  # Gateway router for routable networks
+  ExternalInterfaceDefaultRoute: '2001:db8:fd00:1000::1'
+  # Customize the VLAN ID to match the local environment
+  ExternalNetworkVlanID: 0
+
+  # Customize the IP subnets to match the local environment
+  ManagementNetCidr: 'fd00:fd00:fd00:6000::/64'
+  # Customize the IP range to use for static IPs and VIPs
+  ManagementAllocationPools: [{'start': 'fd00:fd00:fd00:6000::10', 'end': 'fd00:fd00:fd00:6000:ffff:ffff:ffff:fffe'}]
+  # Customize the VLAN ID to match the local environment
+  ManagementNetworkVlanID: 60
+
+  # Define the DNS servers (maximum 2) for the overcloud nodes
+  # When the list is not set (empty) the nameservers on the ctlplane subnet(s) will be used.
+  # (ctlplane subnet(s) nameservers are confgured by the ``undercloud_nameservers`` option in ``undercloud.conf``)
+  DnsServers: []
+  # List of Neutron network types for tenant networks (will be used in order)
+  NeutronNetworkType: 'vxlan,vlan'
+  # The tunnel type for the tenant network (vxlan or gre). Set to '' to disable tunneling.
+  NeutronTunnelTypes: 'vxlan'
+  # Neutron VLAN ranges per network, for example 'datacentre:1:499,tenant:500:1000':
+  NeutronNetworkVLANRanges: 'datacentre:1:1000'
+  # Customize bonding options, e.g. "mode=4 lacp_rate=1 updelay=1000 miimon=100"
+  # for Linux bonds w/LACP, or "bond_mode=active-backup" for OVS active/backup.
+  BondInterfaceOvsOptions: "bond_mode=active-backup"
+  # Specify Tunnel endpoints to be IPv6
+  NeutronOverlayIPVersion: 6

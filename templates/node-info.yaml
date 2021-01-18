@@ -1,0 +1,9 @@
+parameter_defaults:
+  OvercloudControllerFlavor: control
+  OvercloudComputeFlavor: compute
+  OvercloudCephStorageFlavor: ceph-storage
+  ControllerCount: 1
+  ComputeCount: 3
+  CephStorageCount: 1
+# Added the line below in ceph-extraconfig.yml as well
+  CephDefaultPoolSize: 1

@@ -1,0 +1,5 @@
+parameter_defaults:
+  NovaComputeExtraConfig:
+    nova::compute::nova_config:
+      DEFAULT/resume_guests_state_on_host_boot: 
+        value: "true"

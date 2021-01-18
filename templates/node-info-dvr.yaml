@@ -1,0 +1,7 @@
+parameter_defaults:
+  OvercloudControllerFlavor: control
+  OvercloudComputeDVRFlavor: compute
+  OvercloudCephStorageFlavor: ceph-storage
+  ControllerCount: 1
+  ComputeDVRCount: 3
+  CephStorageCount: 1

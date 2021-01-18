@@ -110,10 +110,11 @@ Identify the components of your cluster, I’ve done one of the following for di
 openstack overcloud roles generate -o ~/roles/roles_data.yaml Controller ComputeDVR CephStorage
 
 openstack overcloud roles generate -o ~/roles/roles_data.yaml Controller Compute CephStorage
+```
 
-Note: By default, CephStorage doesn’t get an external interface created so you need to add it in the relevant section.
-
+**Note:** By default, CephStorage doesn’t get an external interface created so you need to add it in the relevant section.
 E.g.:
+```
   networks:
     - External
 ```
@@ -172,13 +173,36 @@ Include:
 
 ```
 $ cat /home/stack/templates/ceph-extraconfig.yaml
+parameter_defaults:
+# added the line below in templates/node-info.yaml
+  CephDefaultPoolSize: 1
+  CephAnsibleDisksConfig:
+    devices:
+      - /dev/vdb
+    journal_size: 512
+    osd_scenario: collocated
+#  ExtraConfig:
+#    ceph::profile::params::osds: {}
+
+  CephConfigOverrides:
+# the line below is from: ttps://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
+    CephPoolDefaultSize: 1
+    CephPoolDefaultPgNum: 32
+    mon_max_pg_per_osd: 2000
+# https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/deploying_an_overcloud_with_containerized_red_hat_ceph/index
+  CephPools:
+    - {"name": volumes, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": vms, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": images, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": metrics, "pg_num": 128, "pgp_num": 128, "application": openstack_gnocchi, "size": 1}
+    - {"name": backups, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
 
 ```
 
 
 ## Network Isolation
 
-For each OpenStack node, I have six interfaces on the following vlans:
+For each OpenStack node, I have six interfaces (for each VM)  on the following vlans:
 
 | NIC | Eth | VLAN ID | VLAN Description |
 | --- | --- | --- | --- |
@@ -240,7 +264,7 @@ parameter_defaults:
   CephStorageCount: 1
 ```
 
-OR
+OR (if using DVR - not tested):
 
 ```
 $ cat /home/stack/templates/node-info.yaml
@@ -254,6 +278,8 @@ parameter_defaults:
 ```
 
 ### Disable telemetry
+
+This is useful if you are limited on resources.
 
 ```
 $ cat /home/stack/templates/disable_telemetry.yaml

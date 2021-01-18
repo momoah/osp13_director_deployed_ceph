@@ -1,0 +1,6 @@
+parameter_defaults:
+  ControllerExtraConfig:
+    octavia::config::octavia_config:
+      controller_worker/amp_secgroup_allowed_projects:
+        value: "ae2863decd4142cebb4ca7e31726a1f8"
+

@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "cpu": "10",
+      "mac": [
+        "52:54:00:3e:de:c7"
+      ],
+      "pm_port": "8222",
+      "arch": "x86_64",
+      "disk": "60",
+      "memory": "65536",
+      "name": "osp13-controller0",
+      "pm_user": "admin",
+      "pm_addr": "192.168.1.220",
+      "pm_password": "mypassword",
+      "pm_type": "ipmi"
+    },
+    {
+      "cpu": "10",
+      "mac": [
+        "52:54:00:a2:6b:3d"
+      ],
+      "pm_port": "8223",
+      "arch": "x86_64",
+      "disk": "60",
+      "memory": "81920",
+      "name": "osp13-compute0",
+      "pm_user": "admin",
+      "pm_addr": "192.168.1.220",
+      "pm_password": "mypassword",
+      "pm_type": "ipmi"
+    },
+    {
+      "cpu": "10",
+      "mac": [
+        "52:54:00:3c:11:76"
+      ],
+      "pm_port": "8224",
+      "arch": "x86_64",
+      "disk": "60",
+      "memory": "81920",
+      "name": "osp13-compute1",
+      "pm_user": "admin",
+      "pm_addr": "192.168.1.220",
+      "pm_password": "mypassword",
+      "pm_type": "ipmi"
+    },
+    {
+      "cpu": "10",
+      "mac": [
+        "52:54:00:f1:84:68"
+      ],
+      "pm_port": "8225",
+      "arch": "x86_64",
+      "disk": "60",
+      "memory": "81920",
+      "name": "osp13-compute2",
+      "pm_user": "admin",
+      "pm_addr": "192.168.1.220",
+      "pm_password": "mypassword",
+      "pm_type": "ipmi"
+    },
+    {
+      "cpu": "2",
+      "mac": [
+        "52:54:00:a2:d5:a5"
+      ],
+      "pm_port": "8226",
+      "arch": "x86_64",
+      "disk": "60",
+      "memory": "15360",
+      "name": "osp13-ceph0",
+      "pm_user": "admin",
+      "pm_addr": "192.168.1.220",
+      "pm_password": "mypassword",
+      "pm_type": "ipmi"
+    }
+  ]
+}
+

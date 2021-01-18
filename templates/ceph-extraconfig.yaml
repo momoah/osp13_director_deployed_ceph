@@ -1,0 +1,24 @@
+parameter_defaults:
+# added the line below in templates/node-info.yaml
+  CephDefaultPoolSize: 1
+  CephAnsibleDisksConfig:
+    devices:
+      - /dev/vdb
+    journal_size: 512
+    osd_scenario: collocated
+#  ExtraConfig:
+#    ceph::profile::params::osds: {}
+
+  CephConfigOverrides:
+# the line below is from: ttps://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ceph_config.html
+    CephPoolDefaultSize: 1
+    CephPoolDefaultPgNum: 32
+    mon_max_pg_per_osd: 2000
+# https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/13/html-single/deploying_an_overcloud_with_containerized_red_hat_ceph/index
+  CephPools:
+    - {"name": volumes, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": vms, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": images, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+    - {"name": metrics, "pg_num": 128, "pgp_num": 128, "application": openstack_gnocchi, "size": 1}
+    - {"name": backups, "pg_num": 128, "pgp_num": 128, "application": rbd, "size": 1}
+
