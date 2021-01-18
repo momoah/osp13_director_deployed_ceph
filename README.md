@@ -566,7 +566,7 @@ For each OpenStack node, I have six interfaces (on all VMs) configured for the f
 |NIC| Eth| VLAN ID| VLAN Description|
 | --- | --- | --- | --- |
 |NIC1| eth0| 10| This is my control VLAN|
-|NIC2| eth1| 30| Storage VLAN|
+|NIC2| eth1| 30 | Storage VLAN|
 |NIC3| eth2| 40| Sotrage Management VLAN|
 |NIC4| eth3| 20| Internal API VLAN|
 |NIC5| eth4| 50| Tenant VLAN| 
